@@ -1,0 +1,4 @@
+- if logged in, should not see regiester. Hide the register button.
+- get entries looking noice.. Save button nice, all buttons centered. Can I have form submit button somewhere else..
+- if minimize entry then save
+

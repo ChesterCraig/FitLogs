@@ -1,0 +1,24 @@
+<div class="row">
+  <div class="col-6">
+      <div class="jumbotron jumbotron-fluid">
+          <div class="container">
+            <h1 class="display-4">Workout Log</h1>
+            <p class="lead">Ensure each exercise on a new line formatted:
+              <br>
+              Exercise Weight reps, weight reps comment
+              <br>
+              or
+              <br>
+              Exercise weight reps/reps/reps comment
+            </p>
+            <button class="btn-success" (click)="addEntry()">+</button>
+            </div>
+          </div>
+        </div>
+    <div class="col-6">
+      <app-usersummary></app-usersummary>
+  </div>
+</div>
+<div class="pt-3 pb-3">
+  <app-entry *ngFor="let e of entries?.reverse()" [thisEntry]="e" (delete)="deleteEntry($event)"></app-entry>
+</div>
