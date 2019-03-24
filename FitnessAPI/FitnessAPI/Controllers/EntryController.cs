@@ -28,14 +28,8 @@ namespace Fitness.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Entry>>> GetEntries()
         {
-            //// Ensure api path for user matches thier id in thier jwt token
-            //if (userId != int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)))
-            //{
-            //    return Unauthorized();
-            //}
             int userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
-
-            return await _context.Entries.Where((arg) => arg.UserId == userId).ToListAsync();
+            return await _context.Entries.Where((arg) => arg.UserId == userId).OrderByDescending(x => x.Date).ToListAsync();
         }
 
 

@@ -8,11 +8,11 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.2.0" PrivateAssets="All" />
+    <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="2.2.0" />
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="Models\" />
-    <Folder Include="wwwroot\" />
     <Folder Include="Dtos\" />
     <Folder Include="Data\" />
   </ItemGroup>
@@ -21,5 +21,18 @@
     <Compile Remove="Controllers\ValuesController.cs" />
     <Compile Remove="Dtos\UserDto.cs" />
     <Compile Remove="Controllers\AccountController %28copy%29.cs" />
+    <Compile Remove="Migrations\20190324105217_mysqlinitial.cs" />
+    <Compile Remove="Migrations\20190324105217_mysqlinitial.Designer.cs" />
+    <Compile Remove="Migrations\FitnessContextModelSnapshot.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Remove="wwwroot\fontawesome-webfont.fee66e712a8a08eef580.woff" />
+    <Content Remove="wwwroot\fontawesome-webfont.af7ae505a9eed503f8b8.woff2" />
+    <Content Remove="wwwroot\fontawesome-webfont.912ec66d7572ff821749.svg" />
+    <Content Remove="wwwroot\polyfills.fec6c8f5a91a7af706ca.js" />
+    <Content Remove="wwwroot\fontawesome-webfont.woff" />
+    <Content Remove="wwwroot\fontawesome-webfont.ttf" />
+    <Content Remove="wwwroot\fontawesome-webfont.svg" />
+    <Content Remove="wwwroot\polyfills.js.map" />
   </ItemGroup>
 </Project>

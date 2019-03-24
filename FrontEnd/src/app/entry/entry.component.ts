@@ -5,6 +5,7 @@ import { AuthService } from '../services/auth.service';
 import { AlertifyjsService } from '../services/alertifyjs.service';
 
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-entry',
@@ -26,22 +27,18 @@ export class EntryComponent implements OnInit {
 
 
   ngOnInit() {
-    this.editMode = false;
-    console.log('This Entry : ' + JSON.stringify(this.thisEntry));
+    this.disableEdit();
     this.entryForm = this.formBuilder.group({
-      date: [this.thisEntry.date, Validators.required],
+      // date: [this.thisEntry.date, Validators.required],
+      date: [new DatePipe('en-gb').transform(this.thisEntry.date, 'y-MM-dd'), Validators.required],
       summary: [this.thisEntry.summary],
       activity: [this.thisEntry.activity]
     });
-
-    console.log('This Form : ' + JSON.stringify(this.entryForm.value));
-    // look at using patch value
   }
 
   submitEntryChanges() {
     // On submit of the form
     if (!this.entryForm.dirty) {
-      console.log('form is unchanged.. ');
       this.disableEdit();
       return;
     }
@@ -79,17 +76,10 @@ export class EntryComponent implements OnInit {
   }
 
   enableEdit() {
-      console.log('enable edit');
       this.editMode = true;
   }
 
   disableEdit() {
-    console.log('disable edit');
     this.editMode = false;
   }
 }
-
-
-
-// DATE NOT SHOWING IN TEXT PART OF FORM ISSUE..
-// https://blog.johanneshoppe.de/2016/10/angular-2-how-to-use-date-input-controls-with-angular-forms/

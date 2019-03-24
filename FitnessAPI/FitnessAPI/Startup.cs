@@ -32,16 +32,24 @@ namespace FitnessAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            Console.WriteLine("%%%%%%%%%%%%% %%%%%%%% " + Configuration.GetConnectionString("DefaultConnection"));
             // Setup databse service
-            services.AddDbContext<FitnessContext>(opt => opt.UseInMemoryDatabase("FitnessDb"));
-            services.AddCors(); // Enable Cross origin for local testing.. requsts coming from same addres
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            //services.AddDbContext<FitnessContext>(opt => opt.UseInMemoryDatabase("FitnessDb"));
+            //services.AddDbContext<FitnessContext>(opt => opt.UseMySql(Configuration.GetSection("ConenctionStrings:DefaultConnection").Value));
+            services.AddDbContext<FitnessContext>(opt => opt.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
+            // Perform any pending migrations to keep out db up to date
+            services.BuildServiceProvider().GetService<FitnessContext>().Database.Migrate();
+
+            // include cors service for enabling cross origin requests
+            services.AddCors(); 
+
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
             // Add Auth repository as a scoped service. Scoped for session of each request.
             services.AddScoped<IAuthRepository, AuthRepository>();
 
-
+            // Define authentication mechanism
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>
                 {
@@ -53,25 +61,6 @@ namespace FitnessAPI
                         ValidateAudience = false
                    };
                 });
-
-            //services.AddIdentity<User, IdentityRole>()
-            //.AddEntityFrameworkStores<FitnessContext>()
-            //.AddDefaultTokenProviders();
-
-
-
-
-            //services.AddDefaultIdentity<User>()
-            //       .AddEntityFrameworkStores<FitnessContext>();
-
-
-            //services.Configure<IdentityOptions>(options =>
-            //{
-            //    // Security settings.. e.g. password length/complexity
-
-            //    options.User.RequireUniqueEmail = true;
-
-            //});
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -82,25 +71,32 @@ namespace FitnessAPI
                 app.UseDeveloperExceptionPage();
             }
 
+            // Enable cross origin requests - required when developing and serving static files on seperate port to api
             app.UseCors(builder =>
                 builder
                     .AllowAnyOrigin()
                     .AllowAnyHeader()
                     .AllowAnyMethod());
-                
+
+            // Use Https  
             app.UseHttpsRedirection();
 
-          
-
-            // this will serve wwwroot/index.html when path is '/'
+            // Serve wwwroot/index.html when path is '/'
             app.UseDefaultFiles();
 
-            // this will serve js, css, images etc.
+            // Serve sttic js, css, images etc.
             app.UseStaticFiles();
 
+            // Use JWT token authentication
             app.UseAuthentication();
 
-            app.UseMvc();
+            // For any unknown routes, return the index page as angular will be parsing url for internal routes.
+            app.UseMvc(routes => {
+                routes.MapSpaFallbackRoute(
+                    name: "spa-fallback",
+                    defaults: new { controller = "Fallback", action = "index" }
+                    );
+            });
         }
     }
 }

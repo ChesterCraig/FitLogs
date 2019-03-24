@@ -1,39 +1,39 @@
-<div class="card w-100 mb-3" (click)="enableEdit()">
-  <button class="btn btn-danger cc-close" (click)="removeEntry()" *ngIf="editMode">Delete</button>
-  <div class="card-body">
-    <h3 *ngIf="!editMode" class="card-title">{{thisEntry?.date | date: 'fullDate'}}</h3>
-    <h3 *ngIf="editMode" class="card-title">{{entryForm.value?.date | date: 'fullDate'}}</h3>
-
-
-    <div *ngIf="!editMode">
+<div class="card w-100 mb-3">
+  <!-- READ ONLY VIEW -->
+  <div *ngIf="!editMode" (click)="enableEdit()">
+      <div class="card-body">
+          <h3 class="card-title">{{thisEntry?.date | date: 'fullDate'}}</h3>
         <p>{{thisEntry.summary}}</p>
         <p>{{thisEntry.activity}}</p>
     </div>
-
-    <div *ngIf="editMode">
-
-      <form [formGroup]="entryForm" (ngSubmit)="submitEntryChanges()">
-        <div class="form-group">
-          <label class="form-group">
-          Date
-          </label>
-          <input id="date" type="date" formControlName="date">
-        </div>
-        <div class="form-group">
-          <label>
-          Summary
-          </label>
-          <textarea id ="summary" formControlName="summary"></textarea>
-        </div>
-        <div class="form-group">
-          <label>
-            Activity
-          </label>
-          <textarea id="activity" formControlName="activity"></textarea>
-        </div>
-      </form>
-    </div>
   </div>
-  <button *ngIf="editMode" class="btn btn-success" (click)="submitEntryChanges()">Save</button>
-  <!--{{entryForm.value | json}}-->
+
+  <!-- EDITABLE VIEW -->
+  <div *ngIf="editMode" >
+      <button class="btn btn-danger cc-close" (click)="removeEntry()" *ngIf="editMode">Delete</button>
+      <div class="card-body">
+        <h3 class="card-title">{{entryForm.value?.date | date: 'fullDate'}}</h3>
+        <form [formGroup]="entryForm" (ngSubmit)="submitEntryChanges()">
+          <div class="form-group">
+            <label class="form-group">
+            Date
+            </label>
+            <input id="date" type="date" formControlName="date">
+          </div>
+          <div class="form-group">
+            <label>
+            Summary
+            </label>
+            <textarea id ="summary" formControlName="summary"></textarea>
+          </div>
+          <div class="form-group">
+            <label>
+              Activity
+            </label>
+            <textarea id="activity" formControlName="activity"></textarea>
+          </div>
+        </form>
+      </div>
+      <button class="btn btn-success" (click)="submitEntryChanges()">Save</button>
+  </div>
 </div>

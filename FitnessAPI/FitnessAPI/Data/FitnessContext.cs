@@ -13,9 +13,9 @@ namespace FitnessAPI.Models
 
 
         // DbSets
-        public DbSet<Workout> Workouts { get; set; }
-        public DbSet<Movement> Movements { get; set; }
-        public DbSet<Exercise> Exercises { get; set; }
+        //public DbSet<Workout> Workouts { get; set; }
+        //public DbSet<Movement> Movements { get; set; }
+        //public DbSet<Exercise> Exercises { get; set; }
 
         public DbSet<Entry> Entries { get; set; }
         public DbSet<User> Users { get; set; }
