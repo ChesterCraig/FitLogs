@@ -32,14 +32,19 @@ namespace FitnessAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            Console.WriteLine("%%%%%%%%%%%%% %%%%%%%% " + Configuration.GetConnectionString("DefaultConnection"));
             // Setup databse service
             //services.AddDbContext<FitnessContext>(opt => opt.UseInMemoryDatabase("FitnessDb"));
-            //services.AddDbContext<FitnessContext>(opt => opt.UseMySql(Configuration.GetSection("ConenctionStrings:DefaultConnection").Value));
-            services.AddDbContext<FitnessContext>(opt => opt.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
-            // Perform any pending migrations to keep out db up to date
-            services.BuildServiceProvider().GetService<FitnessContext>().Database.Migrate();
+            // Use SQL Database if in Azure, otherwise, use SQLite
+            if (Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Production")
+            {
+                services.AddDbContext<FitnessContext>(opt => opt.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+
+                // Perform any pending migrations to keep out db up to date
+                services.BuildServiceProvider().GetService<FitnessContext>().Database.Migrate();
+            }
+            else
+                services.AddDbContext<FitnessContext>(opt => opt.UseMySql(Configuration.GetConnectionString("LocalDevConnection")));
 
             // include cors service for enabling cross origin requests
             services.AddCors(); 
