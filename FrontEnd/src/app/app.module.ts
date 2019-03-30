@@ -6,6 +6,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { BsDropdownModule } from 'ngx-bootstrap';
 import { JwtModule } from '@auth0/angular-jwt';
 import { ReactiveFormsModule } from '@angular/forms';
+import {AutosizeModule} from 'ngx-autosize';
 
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './navbar/navbar.component';
@@ -19,6 +20,7 @@ import { UsersummaryComponent } from './usersummary/usersummary.component';
 import { routes } from './routes';
 import { AuthGuard } from './guards/auth.guard';
 import { ProfilesettingsComponent } from './profilesettings/profilesettings.component';
+
 
 
 
@@ -54,7 +56,8 @@ export function tokenGetter(): string {
         whitelistedDomains: ['localhost:5001'],         // Routes to pass token
         blacklistedRoutes: ['localhost:5001/Auth']      // Routes without token
       }
-    })
+    }),
+    AutosizeModule
   ],
   providers: [AuthGuard],
   bootstrap: [AppComponent]

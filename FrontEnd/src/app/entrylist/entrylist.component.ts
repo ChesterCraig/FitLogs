@@ -19,12 +19,12 @@ export class EntrylistComponent implements OnInit {
       .subscribe(data => {
         this.entries = data;
       });
-  }
+    }
 
   addEntry() {
     this.entryService.createEntry(this.authService.decodedToken.nameId)
       .subscribe(data => {
-        this.entries.push(data);
+        this.entries.unshift(data);
       });
   }
 
@@ -32,5 +32,4 @@ export class EntrylistComponent implements OnInit {
   deleteEntry(entryToDelete: Entry) {
     this.entries = this.entries.filter(entry => entry.id !== entryToDelete.id);
   }
-
 }

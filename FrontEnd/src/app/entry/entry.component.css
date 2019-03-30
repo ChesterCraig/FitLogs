@@ -7,3 +7,11 @@
 label {
   display: block;
 }
+
+.honour-new-lines {
+  white-space: pre-line;
+}
+
+textarea {
+  width: 100%;
+}

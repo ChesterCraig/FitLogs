@@ -29,7 +29,6 @@ export class EntryComponent implements OnInit {
   ngOnInit() {
     this.disableEdit();
     this.entryForm = this.formBuilder.group({
-      // date: [this.thisEntry.date, Validators.required],
       date: [new DatePipe('en-gb').transform(this.thisEntry.date, 'y-MM-dd'), Validators.required],
       summary: [this.thisEntry.summary],
       activity: [this.thisEntry.activity]
@@ -75,6 +74,7 @@ export class EntryComponent implements OnInit {
     });
   }
 
+  // Helper functions for handling user interactions
   enableEdit() {
       this.editMode = true;
   }
