@@ -12,5 +12,7 @@ namespace FitnessAPI.Data
 
         Task<bool> UserExists(string username);
 
+        Task<User> GetUser(string username);
+        Task<User> GetUser(int id);
     }
 }

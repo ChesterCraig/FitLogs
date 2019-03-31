@@ -49,8 +49,19 @@ namespace FitnessAPI.Data
 
         public async Task<bool> UserExists(string username)
         {
+            return await GetUser(username) != null;
+        }
+
+        public async Task<User> GetUser(string username)
+        {
             var user = await _context.Users.FirstOrDefaultAsync(x => x.Username == username);
-            return user != null;
+            return user;
+        }
+
+        public async Task<User> GetUser(int id)
+        {
+            var user = await _context.Users.FirstOrDefaultAsync(x => x.Id == id);
+            return user;
         }
 
 
@@ -83,6 +94,5 @@ namespace FitnessAPI.Data
                 return true;
             }
         }
-
     }
 }

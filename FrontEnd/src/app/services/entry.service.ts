@@ -5,15 +5,6 @@ import { Entry } from '../models/entry';
 import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
 
-
-// // Eventually this will need to consume API
-// const httpOptions = {
-//      Headers = new HttpHeaders({
-//        'Authorization': 'Bearer: ' + localStorage.getItem('token');
-//      })
-// };
-// Would pass httpOptions with http.xxx function
-
 @Injectable({
   providedIn: 'root'
 })

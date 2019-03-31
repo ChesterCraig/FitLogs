@@ -3,6 +3,7 @@ import { EntryService } from '../services/entry.service';
 import { Entry } from '../models/entry';
 import { AuthService } from '../services/auth.service';
 
+
 @Component({
   selector: 'app-entrylist',
   templateUrl: './entrylist.component.html',

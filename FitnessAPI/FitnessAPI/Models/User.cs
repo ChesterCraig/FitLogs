@@ -14,6 +14,8 @@ namespace FitnessAPI.Models
 
         public byte[] PasswordSalt { get; set; }
 
+        public string Note { get; set; }
+
         public ICollection<Entry> Entries { get; set; }
     }
 }
