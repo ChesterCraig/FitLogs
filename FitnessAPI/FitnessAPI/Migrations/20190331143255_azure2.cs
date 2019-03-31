@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace FitnessAPI.Migrations
 {
-    public partial class sqlserver : Migration
+    public partial class azure2 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -17,7 +17,7 @@ namespace FitnessAPI.Migrations
                     Username = table.Column<string>(nullable: true),
                     PasswordHash = table.Column<byte[]>(nullable: true),
                     PasswordSalt = table.Column<byte[]>(nullable: true),
-                    Note = table.Column<string>(nullable: true),
+                    Note = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {

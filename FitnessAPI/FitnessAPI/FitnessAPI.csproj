@@ -15,6 +15,7 @@
     <Folder Include="Models\" />
     <Folder Include="Dtos\" />
     <Folder Include="Data\" />
+    <Folder Include="Migrations\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Remove="Models\EmptyClass.cs" />

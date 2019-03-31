@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FitnessAPI.Migrations
 {
     [DbContext(typeof(FitnessContext))]
-    [Migration("20190324132402_sqlserver")]
-    partial class sqlserver
+    [Migration("20190331143255_azure2")]
+    partial class azure2
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -47,6 +47,8 @@ namespace FitnessAPI.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Note");
 
                     b.Property<byte[]>("PasswordHash");
 
