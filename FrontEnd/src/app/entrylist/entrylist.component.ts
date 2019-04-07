@@ -16,14 +16,14 @@ export class EntrylistComponent implements OnInit {
   entries: Entry[];
 
   ngOnInit() {
-    this.entryService.getAllEntries(this.authService.decodedToken.nameId)
+    this.entryService.getAllEntries(this.authService.getUserID())
       .subscribe(data => {
         this.entries = data;
       });
     }
 
   addEntry() {
-    this.entryService.createEntry(this.authService.decodedToken.nameId)
+    this.entryService.createEntry(this.authService.getUserID())
       .subscribe(data => {
         this.entries.unshift(data);
       });

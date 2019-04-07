@@ -9,22 +9,22 @@ import { environment } from '../../environments/environment';
   providedIn: 'root'
 })
 export class UserSettingsService {
-  baseUrl = environment.apiUrl + 'Users/Note/';
+  baseUrl = environment.apiUrl + 'Users/';
 
   constructor(private http: HttpClient) { }
 
   // Fetch users note
-  getNote(): Observable<any> {
-    return this.http.get<string>(this.baseUrl);
+  getNote(userId: number): Observable<any> {
+    return this.http.get<string>(this.baseUrl + userId + '/Note');
   }
 
   // update users note
-  updateNote(note: string) {
+  updateNote(userId: Number, note: string) {
     const userNoteDto = {
       'contents': note
     };
 
-    return this.http.put<Entry>(this.baseUrl, userNoteDto);
+    return this.http.put<Entry>(this.baseUrl + userId + '/Note', userNoteDto);
   }
 
 }

@@ -13,8 +13,8 @@ using FitnessAPI.Data;
 
 namespace Fitness.Controllers
 {
-    [Authorize]
-    [Route("api/Users/Note")]
+    //[Authorize]
+    [Route("api/Users/{Id}/Note")]
     [ApiController]
     public class NoteController : ControllerBase
     {
@@ -28,11 +28,12 @@ namespace Fitness.Controllers
         }
 
         // User can fetch thier note
-        [HttpGet]
-        public async Task<ActionResult<UserNoteDto>> GetNote()
+        [HttpGet(Name = "getNote")]
+        public async Task<ActionResult<UserNoteDto>> GetNote(int id)
         {
             int userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
             var user = await _authRepository.GetUser(userId);
+
             if (user == null)
             {
                 return NotFound();
@@ -48,10 +49,16 @@ namespace Fitness.Controllers
 
         // User can update thier note
         [HttpPut]
-        public async Task<IActionResult> UpdateEntry(UserNoteDto noteDto)
+        public async Task<IActionResult> UpdateEntry(int id, UserNoteDto noteDto)
         {
             int userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
+            if (userId != id)
+            {
+                return Unauthorized();
+            }
+
             var user = await _authRepository.GetUser(userId);
+
             if (user == null)
             {
                 return NotFound();
@@ -59,7 +66,7 @@ namespace Fitness.Controllers
 
             user.Note = noteDto.Contents;
     
-            _context.Users.Update(user).State = EntityState.Modified;
+            _context.Users.Update(user);
             await _context.SaveChangesAsync();
 
             return NoContent();

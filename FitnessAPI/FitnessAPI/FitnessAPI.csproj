@@ -25,6 +25,8 @@
     <Compile Remove="Migrations\20190324105217_mysqlinitial.cs" />
     <Compile Remove="Migrations\20190324105217_mysqlinitial.Designer.cs" />
     <Compile Remove="Migrations\FitnessContextModelSnapshot.cs" />
+    <Compile Remove="Services\AuthService.cs" />
+    <Compile Remove="Services\AuthService %28copy%29.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Remove="wwwroot\fontawesome-webfont.fee66e712a8a08eef580.woff" />

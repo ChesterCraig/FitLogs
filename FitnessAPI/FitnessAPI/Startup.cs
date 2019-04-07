@@ -1,22 +1,17 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
-using FitnessAPI.Data;
-using FitnessAPI.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+
+using FitnessAPI.Data;
+using FitnessAPI.Models;
+using Microsoft.AspNetCore.Http;
 
 namespace FitnessAPI
 {
@@ -54,6 +49,9 @@ namespace FitnessAPI
             // Add Auth repository as a scoped service. Scoped for session of each request.
             services.AddScoped<IAuthRepository, AuthRepository>();
 
+            // Add Auth service as a scoped service. Scoped for session of each request.
+            //services.AddScoped<AuthService, >();
+
             // Define authentication mechanism
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>
@@ -63,7 +61,8 @@ namespace FitnessAPI
                         ValidateIssuerSigningKey = true,
                         IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(Configuration.GetSection("AppSettings:Token").Value)),
                         ValidateIssuer = false,
-                        ValidateAudience = false
+                        ValidateAudience = false,
+                        RequireExpirationTime = true
                    };
                 });
         }
@@ -74,6 +73,18 @@ namespace FitnessAPI
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+            }
+            else
+            {
+                // Production exception handler for server errors.
+                app.UseExceptionHandler(applicationBuilder =>
+                {
+                    applicationBuilder.Run(async context =>
+                    {
+                        context.Response.StatusCode = 500;
+                        await context.Response.WriteAsync("An unexpected server error has occured.");
+                    });
+                });
             }
 
             // Enable cross origin requests - required when developing and serving static files on seperate port to api
@@ -89,7 +100,7 @@ namespace FitnessAPI
             // Serve wwwroot/index.html when path is '/'
             app.UseDefaultFiles();
 
-            // Serve sttic js, css, images etc.
+            // Serve static js, css, images etc.
             app.UseStaticFiles();
 
             // Use JWT token authentication

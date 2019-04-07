@@ -1,17 +1,11 @@
 ﻿using FitnessAPI.Data;
 using FitnessAPI.Dto;
 using FitnessAPI.Models;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Cors;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System;
-using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
@@ -52,8 +46,6 @@ namespace Fitness.Controllers
             var createdUser = await _authRepository.Register(userToCreate, userRegDto.Password);
 
             return StatusCode(201);
-            //return CreatedAtRoute()
-
         }
 
 
@@ -68,7 +60,6 @@ namespace Fitness.Controllers
             {
                 return Unauthorized();
             }
-
 
             // Start building token
             var claims = new[]

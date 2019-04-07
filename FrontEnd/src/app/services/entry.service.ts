@@ -17,12 +17,12 @@ export class EntryService {
     return this.http.get<Entry[]>(this.baseUrl);
   }
 
-  updateEntry(userId: number, updatedEntry: Entry): Observable<Entry> {
-    return this.http.put<Entry>(this.baseUrl + updatedEntry.id, updatedEntry);
+  updateEntry(userId: number, entryId: number, updatedEntry: any): Observable<Entry> {
+    return this.http.put<Entry>(this.baseUrl + entryId, updatedEntry);
   }
 
-  removeEntry(userId: number, remEntry: Entry) {
-    return this.http.delete(this.baseUrl + remEntry.id);
+  removeEntry(userId: number, entryId: number) {
+    return this.http.delete(this.baseUrl + entryId);
   }
 
   createEntry(userId: number): Observable<Entry> {

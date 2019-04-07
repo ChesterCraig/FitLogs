@@ -14,7 +14,7 @@ export class ProfilesettingsComponent implements OnInit {
   userNote: string = null;
 
   ngOnInit() {
-    this.userSettingsService.getNote().subscribe(
+    this.userSettingsService.getNote(this.authService.getUserID()).subscribe(
       data => {
         this.userNote = data.contents;
       }
@@ -22,10 +22,10 @@ export class ProfilesettingsComponent implements OnInit {
   }
 
   updateUserNote() {
-    this.userSettingsService.updateNote(this.userNote).subscribe(
+    this.userSettingsService.updateNote(this.authService.getUserID(), this.userNote).subscribe(
     null,
       error => {
-      console.log("failed to update users note");
+      console.log('failed to update users note');
     }
     );
   }

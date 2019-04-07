@@ -36,9 +36,18 @@ export class AuthService {
     localStorage.removeItem('token');
   }
 
-  loggedIn() {
+  loggedIn(): Boolean {
     const token = localStorage.getItem('token');
     return !this.jwtHelper.isTokenExpired(token);
+  }
+
+  getUserID() {
+    if (this.loggedIn()) {
+      return this.decodedToken.nameid;
+    } else {
+      console.log('Error: Trying to request current user id without being logged in.');
+      return null;
+    }
   }
 
   // if there is already a token stored, parse it

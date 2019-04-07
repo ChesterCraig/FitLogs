@@ -1,11 +1,8 @@
 <h2>Profile Settings</h2>
-<p>Nothing here yet...<br>
-  From here you will be able to update your program that is displayed on the entries screen, change your password etc.
-</p>
-
+<br>
 <h3>Workout Notes</h3>
 <form #userNoteForm="ngForm" (ngSubmit)="updateUserNote()">
     <textarea name="contents" placeholder="Workout program notes" autosize [(ngModel)]="userNote"></textarea>
     <br>
     <button class="btn btn-success" type="save">Save</button>
-  </form>
+</form>

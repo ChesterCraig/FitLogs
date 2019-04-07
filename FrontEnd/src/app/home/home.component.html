@@ -1,7 +1,7 @@
 <div class="container mt-5">
   <div *ngIf="!registerMode" style="text-align: center">
     <h1>Fit Logs - Track, Measure, Grow</h1>
-    <p class="lead">Track your fitness and journal your progress on your fitness and welbeing journey.</p>
+    <p class="lead">Track your workouts and measure your progress.</p>
     <div *ngIf="!authService.loggedIn()" class="btn btn-primary btn-lg" (click)="registerModeToggle()">Register</div>
   </div>
 

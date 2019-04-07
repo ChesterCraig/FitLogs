@@ -37,20 +37,21 @@ export class EntryComponent implements OnInit {
 
   submitEntryChanges() {
     // On submit of the form
+
+    // No changes made, no need to invoke update to API
     if (!this.entryForm.dirty) {
       this.disableEdit();
       return;
     }
 
+    // Build update DTO
     const entryToSubmit: Entry = {
-      id: this.thisEntry.id,
-      userId: this.thisEntry.userId,
       date: this.entryForm.value.date,
       summary: this.entryForm.value.summary,
       activity: this.entryForm.value.activity
     };
 
-    this.entryService.updateEntry(this.authService.decodedToken.nameId, entryToSubmit).subscribe(
+    this.entryService.updateEntry(this.authService.getUserID(),this.thisEntry.id, entryToSubmit).subscribe(
         newEntry => {
           this.thisEntry = entryToSubmit;
           this.alertify.success('Changes Saved');
@@ -64,7 +65,7 @@ export class EntryComponent implements OnInit {
 
   removeEntry() {
     this.alertify.confirm('Are you sure?', () => {
-      this.entryService.removeEntry(this.authService.decodedToken.nameId, this.thisEntry).subscribe(
+      this.entryService.removeEntry(this.authService.getUserID(), this.thisEntry.id).subscribe(
         success => {
           this.alertify.success('Removed');
           this.delete.emit(this.thisEntry);
